@@ -4,8 +4,14 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "database": "${workspaceFolder:MeuPontoApp}/bin/Debug/net7.0/win-x64/publish/PontosDB.db",
-            "name": "prod"
+            "database": "C:\\Program Files\\MeuPontoApp\\PontosDB.db",
+            "name": "producao"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:MeuPontoApp}/PontosDB.db",
+            "name": "Debug"
         }
     ]
 }

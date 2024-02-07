@@ -1,78 +1,79 @@
 ﻿using Microsoft.Data.Sqlite;
+using SQLitePCL;
 
 int response;
-DateTime datetime;
-string tipo;
-string motivo = "N/A";
 
-do {
-    Console.WriteLine("Escolha uma opção: [0] sair  [1] escrever");
-    response = int.Parse(Console.ReadLine() ?? "3");
+Console.WriteLine("Escolha uma opção: [0] sair  [1] Registrar ponto  [2] Ver pontos");
+response = int.Parse(Console.ReadLine() ?? "3");
 
-    using (var connection = new SqliteConnection("Data Source=PontosDB.db;Mode=ReadWriteCreate"))
-    {
-        connection.Open();
+var connection = new SqliteConnection($"Data Source=PontosDB.db;Mode=ReadWriteCreate");
 
-        var command = connection.CreateCommand();
-        if(response == 1) {
-            datetime = DateTime.Now;
-            Console.WriteLine("Insira o tipo: [1] Entrada  [2] Saida Almoco  [3] Retorno Almoco  [4] Saida");
-            tipo = Console.ReadLine() ?? "0";
-            switch (tipo){
-                case "1":
-                    if(datetime.Hour > 8 ) {
-                        Console.WriteLine("Você está chegando atrasdo. Insira o motivo: ");
-                        motivo = Console.ReadLine() ?? "0";
-                    }
-                    tipo = "Entrada";
-                    break;
-                
-                case "2":
-                    if((datetime.Hour < 12) || (datetime.Hour >13 && datetime.Minute > 30) ) {
-                        Console.WriteLine("Você está saindo para almoçar fora do seu horário. Insira o motivo: ");
-                        motivo = Console.ReadLine() ?? "0";
-                    }
-                    tipo = "Saida Almoco";
-                    break;
-                
-                case "3":
-                //Para futura implantação: Verificar o tempo de duração do almoço é maior ou menos que 1h12
-                    /*if(datetime.Hour > 8 ) {
-                        Console.WriteLine("Você está chegando atrasdo. Insira o motivo: ");
-                        motivo = Console.ReadLine() ?? "0";
-                    }*/
-                    tipo = "Retorno Almoco";
-                    break;
-                
-                case "4":
-                    if(datetime.Hour > 8 ) {
-                        Console.WriteLine("Você está saindo fora do seu horário. Insira o motivo: ");
-                        motivo = Console.ReadLine() ?? "0";
-                    }
-                    tipo = "Saida";
-                    break;
-            }
-            
-            
+connection.Open();
 
-            command.CommandText = "INSERT INTO PONTO VALUES ($DT_REGISTRO, $TIPO, $MOTIVO)";
-            command.Parameters.AddWithValue("$DT_REGISTRO", datetime);
-            command.Parameters.AddWithValue("$TIPO", tipo);
-            command.Parameters.AddWithValue("$MOTIVO", motivo);
+var command = connection.CreateCommand();
 
-            command.ExecuteScalar();
-        } else if(response == 2) {
-            command.CommandText = "SELECT * FROM PONTO";
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var name = reader.GetString(0);
+if(response == 1) {
+    Console.WriteLine("Insira o tipo: [1] Entrada  [2] Saida Almoco  [3] Retorno Almoco  [4] Saida");
+    var tipo = Console.ReadLine() ?? "0";
 
-                    Console.WriteLine($"Hello, {name}!");
-                }
-            }
-        }
-        connection.Close();
+    Ponto NovoPonto = new Ponto(tipo);
+    NovoPonto.ResgistrarPonto(command);
+
+    
+    Console.WriteLine("Ponto registrado com sucesso!");
+} else if(response == 2) {
+    Ponto.ListaDePontos(command);
+}
+connection.Close();
+
+
+
+class Ponto {
+    private DateTime datetime;
+    private string tipo;
+    private string motivo;
+
+    public Ponto(string _tipo) {
+        datetime = DateTime.Now;
+        tipo = _tipo;
+        motivo = "N/A";
     }
-} while (response != 0);
+
+    public void ResgistrarPonto(SqliteCommand command) {
+        if(HorarioErrado()){
+            Console.WriteLine("Você está registrando seu ponto fora do horário programado. Por favor, insira o motivo da alteração: ");
+            motivo = Console.ReadLine() ?? motivo;
+        }
+        
+        command.CommandText = "INSERT INTO PONTO VALUES ($DT_REGISTRO, $TIPO, $MOTIVO)";
+        command.Parameters.AddWithValue("$DT_REGISTRO", datetime);
+        command.Parameters.AddWithValue("$TIPO", tipo);
+        command.Parameters.AddWithValue("$MOTIVO", motivo);
+        command.ExecuteScalar();
+    }
+
+    private bool HorarioErrado() {
+        if((datetime.Hour > 8 && tipo == "1") ||
+        (((datetime.Hour < 12) || (datetime.Hour >13 && datetime.Minute > 30)) && tipo == "2") ||
+        (datetime.Hour > 8 && tipo == "4")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void ListaDePontos(SqliteCommand command) {
+        command.CommandText = "SELECT * FROM PONTO";
+        var reader = command.ExecuteReader();
+
+        while (reader.Read())
+        {
+            string[] columns = new string[3];
+            reader.GetValues(columns);
+            for(int i=0; i<columns.Length;i++){
+                Console.Write(columns[i] + " | ");
+            }
+            Console.WriteLine();
+        }
+        Console.ReadLine();
+    }
+}

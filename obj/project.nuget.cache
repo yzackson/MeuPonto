@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "T9Dfn4OB8NpsOnjJRPci/Bc3OsoSCfoBQtGRU4cQ6NW6+8Nf+lAn/AI63qNAhTJgp7kIeSIYiHg0aHwgU8vrtA==",
+  "dgSpecHash": "RqOFXV9C/Flm0psCHf2eCVyME87uYKOSbNJ4+swo7JYE78Lah9ED36oXqB6Wcc2g/tBnhG84kaJukd2+wJuRSg==",
   "success": true,
-  "projectFilePath": "c:\\Dev\\Personal\\MeuPontoApp\\MeuPontoApp.csproj",
+  "projectFilePath": "C:\\Dev\\Personal\\MeuPontoApp\\MeuPontoApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Isaac\\.nuget\\packages\\microsoft.data.sqlite\\8.0.1\\microsoft.data.sqlite.8.0.1.nupkg.sha512",
     "C:\\Users\\Isaac\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.1\\microsoft.data.sqlite.core.8.0.1.nupkg.sha512",
@@ -10,7 +10,10 @@
     "C:\\Users\\Isaac\\.nuget\\packages\\sqlitepclraw.core\\2.1.6\\sqlitepclraw.core.2.1.6.nupkg.sha512",
     "C:\\Users\\Isaac\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.6\\sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
     "C:\\Users\\Isaac\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.6\\sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512",
-    "C:\\Users\\Isaac\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+    "C:\\Users\\Isaac\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\Isaac\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\7.0.4\\microsoft.netcore.app.runtime.win-x64.7.0.4.nupkg.sha512",
+    "C:\\Users\\Isaac\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\7.0.4\\microsoft.windowsdesktop.app.runtime.win-x64.7.0.4.nupkg.sha512",
+    "C:\\Users\\Isaac\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\7.0.4\\microsoft.aspnetcore.app.runtime.win-x64.7.0.4.nupkg.sha512"
   ],
   "logs": []
 }
