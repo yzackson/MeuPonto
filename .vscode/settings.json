@@ -1,0 +1,11 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:MeuPontoApp}/bin/Debug/net7.0/win-x64/publish/PontosDB.db",
+            "name": "prod"
+        }
+    ]
+}

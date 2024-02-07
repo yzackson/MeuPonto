@@ -1,0 +1,3 @@
+C:\Dev\Personal\MeuPontoApp\bin\Debug\net7.0\win-x64\publish\MeuPontoApp.pdb
+C:\Dev\Personal\MeuPontoApp\bin\Debug\net7.0\win-x64\publish\e_sqlite3.dll
+C:\Dev\Personal\MeuPontoApp\bin\Debug\net7.0\win-x64\publish\MeuPontoApp.exe
