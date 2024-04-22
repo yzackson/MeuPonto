@@ -1,0 +1,60 @@
+﻿@page "/addupdateponto"
+@using MeuPonto.Data;
+@using MeuPonto.Models
+@inject PontoDatabase _pontoDatabase
+@inject NavigationManager navigationManager
+
+<h1>Add Update Ponto</h1>
+
+<div class="col-md-6">
+        <div class="mb-3">
+            <label for="" class="form-label">ID</label>
+            <input type="text" @bind="id" class="form-control" placeholder="">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label"></label>
+            <input type="text" @bind="data" class="form-control" placeholder="">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label"></label>
+            <input type="text" @bind="tipo" class="form-control" placeholder="">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label"></label>
+            <input type="text" @bind="justificativa" class="form-control" placeholder="">
+        </div>
+        <button type="submit" class="btn btn-sm btn-success" @onclick="AddPonto">Adicionar</button>
+    </div>
+
+@code {
+    private int id = 0;
+    private DateTime data = DateTime.Now;
+    private Tipo tipo = Tipo.ENTRADA;
+    private string justificativa = "";
+
+    public async void AddPonto()
+    {
+        Ponto ponto = new Ponto {
+            ID = id,
+            Data = data,
+            Tipo = tipo,
+            Justificativa = justificativa
+        };
+
+        var response = await _pontoDatabase.SaveItemAsync(ponto);
+        if(response > 0)
+        {
+            if (id == 0)
+            {
+                await App.Current.MainPage.DisplayAlert("Saved", "Save Success", "Ok");
+            } else
+            {
+                await App.Current.MainPage.DisplayAlert("Updated", "Update Success", "Ok");
+            } 
+        }
+        else
+        {
+            await App.Current.MainPage.DisplayAlert("Saved", "Save Failed", "Ok");
+        }
+    }
+}
