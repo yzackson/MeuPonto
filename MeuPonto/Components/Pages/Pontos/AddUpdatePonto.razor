@@ -12,19 +12,26 @@
             <input type="text" @bind="id" class="form-control" placeholder="">
         </div>
         <div class="mb-3">
-            <label for="" class="form-label"></label>
-            <input type="text" @bind="data" class="form-control" placeholder="">
+            <label for="" class="form-label">Data</label>
+        <input type="datetime-local" @bind="data" class="form-control" placeholder="">
         </div>
         <div class="mb-3">
-            <label for="" class="form-label"></label>
-            <input type="text" @bind="tipo" class="form-control" placeholder="">
+            <label for="" class="form-label">Tipo</label>
+            <select @bind="tipo" class="form-control" placeholder="">
+                <option value="@Tipo.ENTRADA">@Tipo.ENTRADA</option>
+                <option value="@Tipo.SAIDA">@Tipo.SAIDA</option>
+                <option value="@Tipo.SAIDA_EXEPCIONAL">@Tipo.SAIDA_EXEPCIONAL</option>
+                <option value="@Tipo.ALMOCO">@Tipo.ALMOCO</option>
+                <option value="@Tipo.RETORNO_ALMOCO">@Tipo.RETORNO_ALMOCO</option>
+            </select>
         </div>
         <div class="mb-3">
-            <label for="" class="form-label"></label>
+            <label for="" class="form-label">Justificativa</label>
             <input type="text" @bind="justificativa" class="form-control" placeholder="">
         </div>
-        <button type="submit" class="btn btn-sm btn-success" @onclick="AddPonto">Adicionar</button>
-    </div>
+    <button type="submit" class="btn btn-sm btn-success" @onclick="AddPonto">Adicionar</button>
+    <button type="button" class="btn btn-sm btn-danger" @onclick="Retornar">Cancelar</button>
+</div>
 
 @code {
     private int id = 0;
@@ -56,5 +63,10 @@
         {
             await App.Current.MainPage.DisplayAlert("Saved", "Save Failed", "Ok");
         }
+    }
+
+    public void Retornar()
+    {
+        navigationManager.NavigateTo($"pontos");
     }
 }
